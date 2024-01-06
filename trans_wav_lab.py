@@ -54,6 +54,9 @@ if __name__ == "__main__":
     parser.add_argument("--in_dir", type=str, default=config.resample_config.in_dir, help="path to source dir")
     parser.add_argument("--out_dir", type=str, default=config.resample_config.out_dir, help="path to target dir")
     parent_dir=config.resample_config.in_dir
+
+    print(f"Parent directory: {parent_dir}")
+
     speaker_names = list(os.walk(parent_dir))[0][1]   
     args = parser.parse_args()
    
@@ -62,6 +65,7 @@ if __name__ == "__main__":
     pool = Pool(processes=processs)
 
     for speaker in os.listdir(args.in_dir):
+        print(f"Input directory: {args.in_dir}")
         spk_dir = os.path.join(args.in_dir, speaker)
         if os.path.isdir(spk_dir):
             print(spk_dir)
