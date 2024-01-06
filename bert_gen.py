@@ -3,7 +3,7 @@ from multiprocessing import Pool
 import commons
 import utils
 from tqdm import tqdm
-from text import check_bert_models, cleaned_text_to_sequence, get_bert
+from text import cleaned_text_to_sequence, get_bert
 import argparse
 import torch.multiprocessing as mp
 from config import config
@@ -36,14 +36,9 @@ def process_line(x):
         word2ph[0] += 1
 
     bert_path = wav_path.replace(".WAV", ".wav").replace(".wav", ".bert.pt")
-
-    try:
-        bert = torch.load(bert_path)
-        assert bert.shape[-1] == len(phone)
-    except Exception:
-        bert = get_bert(text, word2ph, language_str, device)
-        assert bert.shape[-1] == len(phone)
-        torch.save(bert, bert_path)
+    bert = get_bert(text, word2ph, language_str, device)
+    assert bert.shape[-1] == len(phone)
+    torch.save(bert, bert_path)
 
 
 preprocess_text_config = config.preprocess_text_config
@@ -59,7 +54,6 @@ if __name__ == "__main__":
     args, _ = parser.parse_known_args()
     config_path = args.config
     hps = utils.get_hparams_from_file(config_path)
-    check_bert_models()
     lines = []
     with open(hps.data.training_files, encoding="utf-8") as f:
         lines.extend(f.readlines())
