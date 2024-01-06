@@ -1,13 +1,13 @@
 bert_gen:
   config_path: config.json
   device: cuda
-  num_processes: 1
+  num_processes: 2
   use_multi_device: false
 dataset_path: Data/Xier
 emo_gen:
   config_path: config.json
   device: cuda
-  num_processes: 1
+  num_processes: 2
   use_multi_device: false
 mirror: ''
 openi_token: ''
@@ -67,7 +67,7 @@ train_ms:
     WORLD_SIZE: 1
   keep_ckpts: 10
   model: models
-  num_workers: 1
+  num_workers: 2
   spec_cache: true
 translate:
   app_key: ''
