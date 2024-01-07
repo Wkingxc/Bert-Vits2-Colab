@@ -466,7 +466,7 @@ def train_and_evaluate(
         bert = bert.cuda(local_rank, non_blocking=True)
         emo = emo.cuda(local_rank, non_blocking=True)
 
-        with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
+        with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
             (
                 y_hat,
                 l_length,
@@ -517,7 +517,7 @@ def train_and_evaluate(
 
             # Discriminator
             y_d_hat_r, y_d_hat_g, _, _ = net_d(y, y_hat.detach())
-            with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
+            with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
                 loss_disc, losses_disc_r, losses_disc_g = discriminator_loss(
                     y_d_hat_r, y_d_hat_g
                 )
@@ -530,7 +530,7 @@ def train_and_evaluate(
                     logw.detach(),
                     g.detach(),
                 )
-                with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
+                with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
                     # TODO: I think need to mean using the mask, but for now, just mean all
                     (
                         loss_dur_disc,
@@ -549,7 +549,7 @@ def train_and_evaluate(
                 )
                 scaler.step(optim_dur_disc)
             if net_wd is not None:
-                with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
+                with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
                     loss_slm = wl.discriminator(
                         y.detach().squeeze(), y_hat.detach().squeeze()
                     ).mean()
@@ -569,7 +569,7 @@ def train_and_evaluate(
         grad_norm_d = commons.clip_grad_value_(net_d.parameters(), None)
         scaler.step(optim_d)
 
-        with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
+        with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
             # Generator
             y_d_hat_r, y_d_hat_g, fmap_r, fmap_g = net_d(y, y_hat)
             if net_dur_disc is not None:
@@ -577,7 +577,7 @@ def train_and_evaluate(
             if net_wd is not None:
                 loss_lm = wl(y.detach().squeeze(), y_hat.squeeze()).mean()
                 loss_lm_gen = wl.generator(y_hat.squeeze())
-            with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
+            with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
                 loss_dur = torch.sum(l_length.float())
                 loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
                 loss_kl = kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * hps.train.c_kl

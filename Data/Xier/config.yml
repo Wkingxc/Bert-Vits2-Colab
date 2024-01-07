@@ -67,7 +67,7 @@ train_ms:
     WORLD_SIZE: 1
   keep_ckpts: 10
   model: models
-  num_workers: 2
+  num_workers: 4
   spec_cache: true
 translate:
   app_key: ''
