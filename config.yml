@@ -65,9 +65,9 @@ train_ms:
     MASTER_PORT: 10086
     RANK: 0
     WORLD_SIZE: 1
-  keep_ckpts: 10
+  keep_ckpts: 5
   model: models
-  num_workers: 4
+  num_workers: 2
   spec_cache: true
 translate:
   app_key: ''
