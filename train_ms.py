@@ -466,7 +466,7 @@ def train_and_evaluate(
         bert = bert.cuda(local_rank, non_blocking=True)
         emo = emo.cuda(local_rank, non_blocking=True)
 
-        with autocast(enabled=hps.train.bf16_run, dtype=torch.bfloat16):
+        with autocast(enabled=hps.train.bf16_run, dtype=torch.float16):
             (
                 y_hat,
                 l_length,
