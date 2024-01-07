@@ -27,21 +27,21 @@ def process(item):
 def process_text(item):
     spkdir, wav_name, args,lang = item
     speaker = os.path.split(spkdir)[-1]
-    #wav_path = os.path.join(args.in_dir, speaker, wav_name)
     global speaker_annos
     tr_name = wav_name[:-4]
     with open(args.in_dir+'/'+speaker+'/'+tr_name+'.lab', "r", encoding="utf-8") as file:
              text = file.read()
-    text = text.replace("{NICKNAME}",'旅行者')
-    text = text.replace("{M#他}{F#她}",'他')
-    text = text.replace("{M#她}{F#他}",'他')
+    text = text.replace("{NICKNAME}",'开拓者')
+    text = text.replace("{M他}{F她}",'他')
+    text = text.replace("{M她}{F他}",'他')
+    text = text.replace("{F她}{M他}","他")
     text = text.replace("|",'')
-    substring = "{M#妹妹}{F#哥哥}" 
+    substring = "{M妹妹}{F哥哥}" 
     if substring in text:
         if tr_name.endswith("a"):
-           text = text.replace("{M#妹妹}{F#哥哥}",'妹妹')
+           text = text.replace("{M妹妹}{F哥哥}",'妹妹')
         if tr_name.endswith("b"):
-           text = text.replace("{M#妹妹}{F#哥哥}",'哥哥')
+           text = text.replace("{M妹妹}{F哥哥}",'哥哥')
     text = text.replace("#",'')   
     text = f'{lang}|{text}\n' #
     speaker_annos.append(args.out_dir+'/'+speaker+'/'+wav_name+ "|" + speaker + "|" + text)
