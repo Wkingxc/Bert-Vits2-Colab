@@ -33,8 +33,8 @@ def process_text(item):
              text = file.read()
     text = text.replace("{NICKNAME}",'开拓者')
     text = text.replace("{M#他}{F#她}",'他')
-    text = text.replace("{M#她}{F#他}",'他')
     text = text.replace("{F#她}{M#他}","他")
+    text = text.replace("{F#她们}{M#他们}","他们")
     text = text.replace("|",'')
     substring = "{M#妹妹}{F#哥哥}" 
     if substring in text:
