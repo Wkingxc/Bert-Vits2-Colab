@@ -8,10 +8,7 @@ args = parser.parse_args()
 
 # 读取json文件为字符串
 with open('config.json', 'r') as file:
-    data_str = file.read()
-
-# 将字符串解析为json
-data = json.loads(data_str)
+    data = json.load(file)
 
 # 修改batch_size的值
 data['train']['batch_size'] = args.batch_size
