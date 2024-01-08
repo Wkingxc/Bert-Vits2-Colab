@@ -3,7 +3,7 @@ bert_gen:
   device: cuda
   num_processes: 1
   use_multi_device: false
-dataset_path: Data/Xier
+dataset_path: Data/EX1
 emo_gen:
   config_path: config.json
   device: cuda
