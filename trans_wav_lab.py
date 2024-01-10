@@ -38,9 +38,9 @@ def process_text(item):
     text = text.replace("|",'')
     substring = "{M#妹妹}{F#哥哥}" 
     if substring in text:
-        if tr_name.endswith("a"):
+        if tr_name.endswith("f"):
            text = text.replace("{M#妹妹}{F#哥哥}",'妹妹')
-        if tr_name.endswith("b"):
+        if tr_name.endswith("m"):
            text = text.replace("{M#妹妹}{F#哥哥}",'哥哥')
     text = text.replace("#",'')   
     text = f'{lang}|{text}\n' #
